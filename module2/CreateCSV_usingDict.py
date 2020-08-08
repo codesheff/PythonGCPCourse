@@ -7,6 +7,14 @@ datadir='data'
 
 outputfile=os.path.join(datadir,"by_department.csv")
 
+
+if ( not(os.path.exists(datadir))):
+    print('Creating output dir')
+    os.mkdir(datadir)
+else:
+    pass
+
+
 # Store users as list of dictionaries
 users = [ 
      {"name": "Rod", "username": "rod001", "department": "IT infrastructure"}
