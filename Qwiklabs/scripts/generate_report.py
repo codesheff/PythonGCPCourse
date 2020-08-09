@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import csv
+import os, sys
 
 def read_employees(csv_file_location):
     ## Dialect object
@@ -36,13 +37,16 @@ def write_report(dictionary, report_file):
         f.close()
 
 ## Main line
-infile='./Qwiklabs/data/employees.csv'
-outfile='./Qwiklabs/test_report.txt'
+this_script_path=(os.path.dirname(sys.argv[0]))
+this_script_name=(os.path.basename(sys.argv[0]))
+
+data_dir=os.path.join(this_script_path,"../data")
+
+infile=os.path.join(data_dir,'employees.csv')
+outfile=os.path.join(data_dir,'test_report.txt')
+
 employee_list = read_employees(infile)
-
 dictionary = process_data(employee_list)
-
-
 write_report(dictionary, outfile)
 
 
