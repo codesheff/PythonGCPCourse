@@ -36,8 +36,8 @@ def write_report(dictionary, report_file):
         f.close()
 
 ## Main line
-infile='/home/student-04-ae572a217ede/data/employees.csv'
-outfile='/home/student-04-ae572a217ede/test_report.txt'
+infile='./Qwiklabs/data/employees.csv'
+outfile='./Qwiklabs/test_report.txt'
 employee_list = read_employees(infile)
 
 dictionary = process_data(employee_list)
