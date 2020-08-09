@@ -49,6 +49,8 @@ employee_list = read_employees(infile)
 dictionary = process_data(employee_list)
 write_report(dictionary, outfile)
 
+print('Report has been written to {}'.format(outfile))
+
 
 #print(employee_list)
 
