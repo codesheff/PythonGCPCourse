@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 
 import csv
-import os
+import os, sys
 
-datadir='data'
+this_script_path=(os.path.dirname(sys.argv[0]))
+this_script_name=(os.path.basename(sys.argv[0]))
+datadir=os.path.join(this_script_path,"../data")
 
-outputfile=os.path.join(datadir,"by_department.csv")
+outputfile=os.path.abspath(os.path.join(datadir,"by_department.csv"))
 
 
 if ( not(os.path.exists(datadir))):
@@ -29,3 +31,5 @@ with open(outputfile,'w') as by_department:
     writer = csv.DictWriter(by_department,fieldnames=keys)
     writer.writeheader()
     writer.writerows(users)
+
+print('Written ' + outputfile)
