@@ -77,15 +77,15 @@ print(result[1])
 #print(result[1]) # gives error as result is None
 
 
-def extract_pid(log_line):
+def extract_pid_orig(log_line):
     regex = r"\[(\d+)\]"
     result = re.search(regex,log_line)
     if result is None:
         return ""
     return result[1]  # return the 1st capturing group
 
-print(extract_pid('99 elephants in a [cage]'))
-print(extract_pid('A completely different string that also has numbers [34567]'))
+print(extract_pid_orig('99 elephants in a [cage]'))
+print(extract_pid_orig('A completely different string that also has numbers [34567]'))
 
 
 def extract_pid(log_line):
