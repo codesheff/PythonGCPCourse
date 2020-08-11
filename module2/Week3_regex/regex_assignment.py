@@ -12,7 +12,7 @@ def check_web_address(text):
       as well as periods, dashes, and a plus sign, followed by a period and a character-only top-level domain such as ".com", ".info", ".edu", etc.
       Fill in the regular expression to do that, using escape characters, wildcards, repetition qualifiers, beginning and end-of-line characters, and character classes.
       '''
-    pattern = '\w.*\.(com|org|info|edu|US)$'
+    pattern = r'\w.*\.(com|org|info|edu|US)$'
     result = re.search(pattern, text)
     return result != None
 
@@ -30,7 +30,7 @@ def check_time(text):
     the hour is between 1 and 12, with no leading zero, followed by a colon, then minutes between 00 and 59, then an optional space, and then AM or PM, in upper or lower case. 
     Fill in the regular expression to do that. How many of the concepts that you just learned can you use here?
     '''
-    pattern = '1?[0-9]:[0-5][0-9] ?(AM|PM|am|pm)$'
+    pattern = r'1?[0-9]:[0-5][0-9] ?(AM|PM|am|pm)$'
     result = re.search(pattern, text)
     return result != None
 
@@ -47,7 +47,7 @@ def contains_acronym(text):
     The contains_acronym function checks the text for the presence of 2 or more characters or digits surrounded by parentheses, with at least the first character in uppercase (if it's a letter),
      returning True if the condition is met, or False otherwise. For example, "Instant messaging (IM) is a set of communication technologies used for text-based communication" should return True since (IM) satisfies the match conditions." Fill in the regular expression in this function:
     '''
-    pattern = '\([A-Z|0-9][A-z|0-9].*\)'
+    pattern = r'\([A-Z|0-9][A-z|0-9].*\)'
     result = re.search(pattern, text)
     return result != None
 
