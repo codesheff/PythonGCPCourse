@@ -18,10 +18,10 @@ datadir=os.path.join(this_script_path,"data") # Ah!  you don't want the '/' in y
 print('datadir:' + datadir)
 default_logfile=os.path.join(datadir,"syslog_example")
 print('default is :' + default_logfile)
+
+# Set up input options
 parser = argparse.ArgumentParser()
-
 parser.add_argument("--logfile", type=str, dest="logfile", help="the logfile to be processed", default=default_logfile)
-
 args = parser.parse_args()
 
 
