@@ -39,6 +39,8 @@ July 31 03:28:52 mycomputername CRON[55441]: INFO Loading...
 July 31 03:29:34 mycomputername dhcpclient[69232]: ERROR Unable to download more RAM
 July 31 03:34:41 mycomputername NetworkManager[14120]: ERROR 404 error not found
 July 31 03:36:26 mycomputername dhcpclient[79731]: ERROR The cake is a lie!
+July 31 03:36:26 mycomputername dhcpclient[79731]: ERROR stetest!
+July 31 03:36:26 mycomputername dhcpclient[79731]: INFO stetest!
 July 31 03:38:24 mycomputername CRON[92141]: INFO Access permitted
 July 31 03:40:00 mycomputername dhcpclient[40114]: INFO Starting sync
 July 31 03:42:45 mycomputername utility[53726]: INFO I'm sorry Dave. I'm afraid I can't do that
