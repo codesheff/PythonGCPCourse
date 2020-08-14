@@ -7,13 +7,16 @@ import argparse
 
 def error_search(log_file):
     #error = input("What is the error? ")
-    error = 'CRON ERROR Failed to start'
+    error = 'stetest' #hardcoding so I can debug
+
     returned_errors = []
     with open(log_file, mode='r',encoding='UTF-8') as file:
         for log in  file.readlines():
+            #Create list of error patterns, as the word 'error' , plus whatever words user inputs.
             error_patterns = ["error"]
             for i in range(len(error.split(' '))):
                 error_patterns.append(r"{}".format(error.split(' ')[i].lower()))
+                # If all the patterns are matched, the include that in the list of returned errors
                 if all(re.search(error_pattern, log.lower()) for error_pattern in error_patterns):
                     returned_errors.append(log)
         file.close()
@@ -21,7 +24,9 @@ def error_search(log_file):
 
   
 def file_output(returned_errors):
-    with open(os.path.expanduser('~') + '/data/errors_found.log', 'w') as file:
+    #with open(os.path.expanduser('~') + '/data/errors_found.log', 'w') as file:
+    outfile=os.path.join(datadir,"errors_found.log")
+    with open(outfile, 'w') as file:
         for error in returned_errors:
             file.write(error)
         file.close()
