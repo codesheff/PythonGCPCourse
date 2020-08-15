@@ -6,6 +6,7 @@ def validate_user(username, minlen):
     '''
     ## asserts, gives "message" if fails
     ##  be aware, asserts can get removed by code optimisers!
+    ## Basically, asserts are only done when 'debug is true'
     assert type(username) == str, "username must be a string"
     
     if minlen < 1:
