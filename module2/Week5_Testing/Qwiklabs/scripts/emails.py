@@ -16,11 +16,19 @@ def populate_dictionary(filename):
 def find_email(argv):
   """ Return an email address based on the username given."""
   # Create the username based on the command line input.
-  fullname = str(argv[1] + " " + argv[2])
-  # Preprocess the data
-  email_dict = populate_dictionary('/home/student-00-9767adcf058f/data/user_emails.csv')
-  # Find and print the email
-  return email_dict.get(fullname.lower())
+  try:
+    fullname = str(argv[1] + " " + argv[2])
+    # Preprocess the data
+    email_dict = populate_dictionary('/home/student-00-9767adcf058f/data/user_emails.csv')
+    # Find and print the email
+    if email_dict.get(fullname.lower()):
+      return email_dict.get(fullname.lower())
+    else:
+      return "No email address found"
+  except:
+    return "Missing parameters"
+  
+
 
 def main():
   print(find_email(sys.argv))
