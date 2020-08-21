@@ -25,7 +25,7 @@ def search_logfile(log_file):
             result = re.search(pattern, log_entry)         
             if result:
                 message_type='INFO'
-                user = result[3]
+                user = result.group(3)
             
 
             #pattern = r"ticky: ERROR ([\w ]*) *(\[.*\])? *\((.*)\)$"
@@ -34,8 +34,10 @@ def search_logfile(log_file):
             result = re.search(pattern, log_entry)         
             if result:
                 message_type='ERROR'
-                user = result[3]
-                error_type = result[1]
+                #user = result[3]
+                user = result.group(3)
+                #error_type = result[1]
+                error_type = result.group(1)
                 error_messages[error_type] = error_messages.get(error_type,0) + 1
 
             
@@ -47,7 +49,7 @@ def search_logfile(log_file):
         # }
 
             if message_type:  # Add record if it's matched a pattern
-                mytemp_dict=per_user.get(user,{ 'user' : user })
+                mytemp_dict=per_user.get(user,{ 'Username' : user, 'INFO' : 0 , 'ERROR' : 0 })
                 mytemp_dict[message_type] = mytemp_dict.get(message_type,0) + 1
                 per_user[user] = mytemp_dict
             else:
@@ -87,13 +89,13 @@ def WriteOutput(error_messages, per_user):
     for item in per_user.items():
         per_user_list.append(item[1])
 
-    keys = [ "user", "INFO", "ERROR"]
+    keys = [ "Username", "INFO", "ERROR"]
 
     outputfile=os.path.abspath(os.path.join(datadir,"user_statistics.csv"))
     with open(outputfile,'w') as f:
         writer = csv.DictWriter(f,fieldnames=keys)
         writer.writeheader()
-        writer.writerows(sorted(per_user_list, key = operator.itemgetter('user')))
+        writer.writerows(sorted(per_user_list, key = operator.itemgetter('Username')))
 
         
 
