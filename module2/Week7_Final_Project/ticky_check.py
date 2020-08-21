@@ -11,40 +11,61 @@ def search_logfile(log_file):
     import re
 
     #Initialise your dictionary
-    error_messages = {}
-    per_user = {}
+    error_messages = {}  # 
+    per_user = {}        # username, INFO count , ERROR count
     
     with open(log_file, mode='r',encoding='UTF-8') as file:
         for log_entry in  file.readlines():
             #print(log_entry)
 
-            pattern = r'ticky: INFO ([\w ]*) '
+            message_type=''
+
+            pattern = r"ticky: INFO ([\w ]*) *(\[.*\])? *\((\w*)\)$"
             result = re.search(pattern, log_entry)         
             if result:
-                print(log_entry)
                 message_type='INFO'
-                user = result[1]
+                user = result[3]
             
-            pattern = r'ticky: ERROR ([\w ]*) '
+
+            pattern = r"ticky: ERROR ([\w ]*) *(\[.*\])? *\((\w*)\)$"
             result = re.search(pattern, log_entry)         
             if result:
-                print(log_entry)
                 message_type='ERROR'
-                user = result[1]
+                user = result[3]
+                error_type = result[1]
+                error_messages[error_type] = error_messages.get(error_type,0) + 1
 
-            print(log_entry)
-            print(user)
-            print(message_type)
+            
+            # Add one to the dictionary entry
+            if message_type :
+                per_user[(user,message_type)] = per_user.get((user,message_type),0) + 1
+                
 
-            #Create list of error patterns, as the word 'error' , plus whatever words user inputs.
-            #error_patterns = ["error"]
-            #for i in range(len(error.split(' '))):
-            #    error_patterns.append(r"{}".format(error.split(' ')[i].lower()))
-            #    # If all the patterns are matched, the include that in the list of returned errors
-            #    if all(re.search(error_pattern, log.lower()) for error_pattern in error_patterns):
-            #        returned_errors.append(log)
-        file.close()
     return error_messages, per_user
+
+
+def WriteOuput(error_messages, per_user):
+
+    import csv
+    import operator
+
+    outputfile=os.path.abspath(os.path.join(datadir,"error_counts.csv"))
+    
+    if ( not(os.path.exists(datadir))):
+        print('Creating output dir')
+        os.mkdir(datadir)
+    else:
+        pass
+    
+        
+    keys= [ "ERROR", "count"]
+       ## sort the dictionaries, and put them into list of dictionaries ( to be written to csv)
+    #import operator
+    #sorted( error_messages.items(), key=operator.itemgetter(0))
+    
+
+  
+
 
 
 if __name__ == "__main__":
@@ -71,4 +92,16 @@ if __name__ == "__main__":
 
 
     ## Read log file
-    search_logfile(log_file)
+    error_messages = {}
+    per_user = {}
+    error_messages, per_user = search_logfile(log_file)
+
+    print(per_user)
+
+
+
+
+
+    ## write the output files
+   # WriteOuput(error_messages, per_user)
+    
