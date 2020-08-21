@@ -9,25 +9,13 @@
 
 
 
-my_dict = {
-    'bob' : { 'info': 1 , 'error' : 2}
-    ,'fred' : { 'info': 1 , 'error' : 2}
-}
+per_user={
+    'ac': {'ERROR': 2, 'INFO': 2, 'user': 'ac'}, 'ahmed.miller': {'ERROR': 4, 'INFO': 2, 'user': 'ahmed.miller'}, 'blossom': {'ERROR': 4, 'INFO': 2, 'user': 'blossom'}, 'bpacheco': {'ERROR': 2, 'user': 'bpacheco'}, 'breee': {'ERROR': 5, 'INFO': 1, 'user': 'breee'}, 'britanni': {'ERROR': 1, 'INFO': 1, 'user': 'britanni'}, 'enim.non': {'ERROR': 2, 'INFO': 2, 'user': 'enim.non'}, 'flavia': {'ERROR': 3, 'user': 'flavia'}, 'jackowens': {'ERROR': 4, 'INFO': 2, 'user': 'jackowens'}, 'kirknixon': {'ERROR': 1, 'INFO': 2, 'user': 'kirknixon'}, 'mai.hendrix': {'ERROR': 3, 'user': 'mai.hendrix'}, 'mcintosh': {'ERROR': 3, 'INFO': 4, 'user': 'mcintosh'}, 'mdouglas': {'ERROR': 3, 'INFO': 2, 'user': 'mdouglas'}, 'montanap': {'ERROR': 4, 'user': 'montanap'}
+    }
+
+per_user_list=[]
+for item in per_user.items():
+    per_user_list.append(item[1])
 
 
-
-##thoughts 1
-user='bob2'
-if 'bob2' not in my_dict:
-    my_dict['bob2'] = {}
-
-my_dict['bob2']['info'] = my_dict.get('bobs',{}).get('info',0)
-
-## I think you'd need to create the empty dictionary for bob2 1st
-
-my_list=[]
-new_dict=[]
-for key in my_dict:
-    print(my_dict[key])
-    
-
+print(per_user)

@@ -20,14 +20,17 @@ def search_logfile(log_file):
 
             message_type=''
 
-            pattern = r"ticky: INFO ([\w ]*) *(\[.*\])? *\((\w*)\)$"
+            #pattern = r"ticky: INFO ([\w ]*) *(\[.*\])? *\((.*)\)$"
+            pattern = r"ticky: INFO ([\w ']*)(\[.*\])?.*\((.*)\)$"
             result = re.search(pattern, log_entry)         
             if result:
                 message_type='INFO'
                 user = result[3]
             
 
-            pattern = r"ticky: ERROR ([\w ]*) *(\[.*\])? *\((\w*)\)$"
+            #pattern = r"ticky: ERROR ([\w ]*) *(\[.*\])? *\((.*)\)$"
+            pattern = r"ticky: ERROR ([\w ']*)(\[.*\])?.*\((.*)\)$"
+            
             result = re.search(pattern, log_entry)         
             if result:
                 message_type='ERROR'
@@ -37,14 +40,25 @@ def search_logfile(log_file):
 
             
             # Add one to the dictionary entry
-            if message_type :
-                per_user[(user,message_type)] = per_user.get((user,message_type),0) + 1
+            ## Should be in format { 'bob' : { user : bob, info: 1 , error: 2} }
+        #mydict = { 
+        #   'mdouglas':  { 'user' : 'mdouglas', 'INFO': 2 , 'ERROR' : 1 }
+        #   ,'fred':     { 'user' : 'fred'    , 'INFO': 3 , 'ERROR' : 3 }
+        # }
+
+            if message_type:  # Add record if it's matched a pattern
+                mytemp_dict=per_user.get(user,{ 'user' : user })
+                mytemp_dict[message_type] = mytemp_dict.get(message_type,0) + 1
+                per_user[user] = mytemp_dict
+            else:
+                print('Not recognising:' + log_entry)
+
+            
                 
+        return error_messages, per_user
 
-    return error_messages, per_user
 
-
-def WriteOuput(error_messages, per_user):
+def WriteOutput(error_messages, per_user):
 
     import csv
     import operator
@@ -58,10 +72,32 @@ def WriteOuput(error_messages, per_user):
         pass
     
         
-    keys= [ "ERROR", "count"]
-       ## sort the dictionaries, and put them into list of dictionaries ( to be written to csv)
-    #import operator
-    #sorted( error_messages.items(), key=operator.itemgetter(0))
+    ## Write error count file
+    outputfile=os.path.abspath(os.path.join(datadir,"error_message.csv"))
+    with open(outputfile,'w') as f:
+        writer = csv.writer(f)#
+        writer.writerow(['Error', 'Count'])
+        writer.writerows(sorted( error_messages.items(), key = operator.itemgetter(1), reverse = True))
+
+    ## Write User count file
+
+    
+    #Create list of dictionaries
+    per_user_list=[]
+    for item in per_user.items():
+        per_user_list.append(item[1])
+
+    keys = [ "user", "INFO", "ERROR"]
+
+    outputfile=os.path.abspath(os.path.join(datadir,"user_statistics.csv"))
+    with open(outputfile,'w') as f:
+        writer = csv.DictWriter(f,fieldnames=keys)
+        writer.writeheader()
+        writer.writerows(sorted(per_user_list, key = operator.itemgetter('user')))
+
+        
+
+    
     
 
   
@@ -96,12 +132,7 @@ if __name__ == "__main__":
     per_user = {}
     error_messages, per_user = search_logfile(log_file)
 
-    print(per_user)
-
-
-
-
-
+    
     ## write the output files
-   # WriteOuput(error_messages, per_user)
+    WriteOutput(error_messages, per_user)
     
