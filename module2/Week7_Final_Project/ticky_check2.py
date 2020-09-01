@@ -10,7 +10,7 @@ import operator
 error_msg = {}
 user_count = {}
 
-pattern = r"ticky: ([\w]{4,5}) ([\w\s]+)[\[\]#\d\s]*\((\w*)"
+pattern = r"ticky: ([\w]{4,5}) ([\w\s']+)[\[\]#\d\s]*\((\w*)"
 
 logfile = "syslog.log"
 
@@ -40,6 +40,10 @@ with open(logfile) as f:
         user_count[user]["ERROR"] += 1
       elif type == "INFO":
         user_count[user]["INFO"] += 1
+      else:
+        print('Unknown type:' + log)
+    else:
+      print('Missed this' + log)
 
 error_msg = sorted(error_msg.items(), key = operator.itemgetter(1), reverse=True)
 user_count = sorted(user_count.items())
@@ -54,7 +58,7 @@ f.close()
 
 with open(usr_stat, 'w') as f:
   writer = csv.writer(f)
-  writer.writerow(["USERNAME", "INFO", "ERROR"])
+  writer.writerow(["Username", "INFO", "ERROR"])
   for line in user_count:
     writer.writerow([line[0], line[1]["INFO"], line[1]["ERROR"]])
 f.close()
