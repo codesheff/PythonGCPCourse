@@ -42,7 +42,8 @@ def process_data(data):
     # TODO: also handle most popular car_year
     year=item["car"]["car_year"]
     if year not in year_count.keys():
-      year_count[str(year)] += 1
+      year_count[str(year)] = 0
+    year_count[str(year)] += item["total_sales"]
 
   summary = [
     "The {} generated the most revenue: ${}".format(
