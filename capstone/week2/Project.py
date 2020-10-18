@@ -62,7 +62,7 @@ def UploadFeedback(feedback):
 
     import requests
 
-    external_ip='35.224.23.11'
+    external_ip='34.69.172.207'
 
  
     url='http://' + external_ip + '/feedback/'
@@ -83,7 +83,8 @@ def main():
     import os, sys
     this_script_path=(os.path.dirname(sys.argv[0]))
     this_script_name=(os.path.basename(sys.argv[0]))
-    datadir=os.path.abspath(os.path.join(this_script_path,"data", "feedback"))
+    #datadir=os.path.abspath(os.path.join(this_script_path,"data", "feedback"))
+    datadir=os.path.abspath(os.path.join("/","data", "feedback"))
     #outdir='/opt/icons'
 
     filelist=GetListOfFiles(datadir)
