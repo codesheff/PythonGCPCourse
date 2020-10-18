@@ -44,11 +44,20 @@ def process_data(data):
     if year not in year_count.keys():
       year_count[str(year)] = 0
     year_count[str(year)] += item["total_sales"]
+  
+  year_counts = list(year_count.values())
+  years = list(year_count.keys())
+  max_year_count = max(year_counts)
+  max_year_index = year_counts.index(max_year_count)
+  max_year = years[max_year_index]
+
+
 
   summary = [
     "The {} generated the most revenue: ${}".format(
       format_car(max_revenue["car"]), max_revenue["revenue"]),
-    "The {} had the most sales: {}".format(format_car(max_sales["car"]),max_sales["total_sales"])
+    "The {} had the most sales: {}".format(format_car(max_sales["car"]),max_sales["total_sales"]), 
+    "The most popular year was {} with {} sales.".format(max_year, max_year_count)
   ]
 
   return summary
@@ -64,7 +73,8 @@ def cars_dict_to_table(car_data):
 
 def main(argv):
   """Process the JSON data and generate a full report out of it."""
-  data = load_data("car_sales.json")
+  #data = load_data("car_sales.json")
+  data = load_data("capstone/week3/car_sales.json")
   summary = process_data(data)
   print(summary)
   # TODO: turn this into a PDF report
