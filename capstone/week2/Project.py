@@ -41,6 +41,16 @@ def CreateDictionaryFromFile(filepath):
 
     feedback={} # create empty dictionary
     with open(filepath,'r') as f:
+        data = f.read().split('\n')
+        feedback = { 'title':data[0], 'name':data[1], 'date':data[2], 'feedback':data[3] }
+    
+    return feedback
+
+def CreateDictionaryFromFile_OLDVersion(filepath):
+    print('Creating dictionary for file ' + filepath)
+
+    feedback={} # create empty dictionary
+    with open(filepath,'r') as f:
         i=1
         for line in f:
             if i == 1:
@@ -54,8 +64,7 @@ def CreateDictionaryFromFile(filepath):
             
             i += 1
     
-    return feedback
-            
+    return feedback            
 
 
 def UploadFeedback(feedback):
