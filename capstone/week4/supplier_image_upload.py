@@ -4,7 +4,7 @@
 def process_file(file):
     
     import requests
-    
+   
     print('Processing ' + file)
     url = "http://localhost/upload/"
     with open(file, 'rb') as opened:

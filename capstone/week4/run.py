@@ -10,24 +10,25 @@ def GetListOfFiles(directory):
 def CreateDictionaryFromFile(filepath):
     print('Creating dictionary for file ' + filepath)
 
-    feedback={} # create empty dictionary
+    dictionary_out={} # create empty dictionary
     with open(filepath,'r') as f:
         data = f.read().split('\n')
-        feedback = { 'name':data[0], 'weight':str(data[1]).replace(' lbs',''), 'description ':data[2], 'image_name':data[3] }
+        image_name = filepath.split('/')[-1].replace('txt','jpeg')
+        dictionary_out = { 'name':data[0], 'weight':str(data[1]).replace(' lbs',''), 'description':data[2], 'image_name':image_name }
     
-    return feedback
+    return dictionary_out
 
  
 
 
-def UploadFeedback(feedback):
+def Upload(feedback):
 
     import requests
 
-    external_ip='34.69.172.207'
+    external_ip='34.71.36.128'
 
  
-    url='http://' + external_ip + '/feedback/'
+    url='http://' + external_ip + '/fruits/'
     #url='http://35.224.23.11/feedback'
     
 
@@ -57,7 +58,7 @@ def main():
         print('Processing file ' + filepath)
         description = CreateDictionaryFromFile(filepath)
         print(description)
-        #UploadFeedback(description)
+        Upload(description)
         
 
 
