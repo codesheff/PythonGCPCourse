@@ -42,8 +42,8 @@ def process_data(data):
     # TODO: also handle most popular car_year
     year=item["car"]["car_year"]
     if year not in year_count.keys():
-      year_count[str(year)] = 0
-    year_count[str(year)] += item["total_sales"]
+      year_count[year] = 0
+    year_count[year] += item["total_sales"]
   
   year_counts = list(year_count.values())
   years = list(year_count.keys())
@@ -73,13 +73,28 @@ def cars_dict_to_table(car_data):
 
 def main(argv):
   """Process the JSON data and generate a full report out of it."""
-  #data = load_data("car_sales.json")
-  data = load_data("capstone/week3/car_sales.json")
+  data = load_data("car_sales.json")
+  #data = load_data("capstone/week3/car_sales.json")
   summary = process_data(data)
   print(summary)
   # TODO: turn this into a PDF report
+  
+
+
+  import reports
+  report_file='/tmp/cars.pdf'
+  reports.generate(report_file, "A Complete Inventory of My Fruit", '<br/>'.join(summary) , cars_dict_to_table(data))
 
   # TODO: send the PDF report as an email attachment
+  import emails
+  import os
+  sender = "automation@example.com"
+  receiver = "{}@example.com".format(os.environ.get('USER'))
+  subject = "Sales summary for last month"
+  body = '\n'.join(summary)
+  
+  message = emails.generate(sender, receiver, subject, body, report_file)
+  emails.send(message)
 
 
 if __name__ == "__main__":
