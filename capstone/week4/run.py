@@ -25,7 +25,7 @@ def Upload(feedback):
 
     import requests
 
-    external_ip='34.71.36.128'
+    external_ip='127.0.0.1'
 
  
     url='http://' + external_ip + '/fruits/'
